@@ -2,6 +2,7 @@ package com.example.rashish.myapplication;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -42,6 +44,15 @@ public class GetDetailsActivity extends AppCompatActivity {
         JSONObject data = new JSONObject();
         GetRequest getDetailsRequest = new GetRequest(Server.API_URL_GET_DETAILS + "?userId=" + userId, getResponseHandler(dialog), getApplicationContext());
         getDetailsRequest.getResponse(data);
+        closeKeyBoard();
+    }
+
+    private void closeKeyBoard(){
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     private Request.ResponseHandler getResponseHandler(final ProgressDialog dialog){

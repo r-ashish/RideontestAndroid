@@ -1,6 +1,7 @@
 package com.example.rashish.myapplication;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.rashish.myapplication.Config.Server;
@@ -59,6 +61,15 @@ public class MainActivity extends AppCompatActivity {
         }
         PostRequest loginRequest = new PostRequest(Server.API_URL_SAVE_DETAILS, getResponseHandler(dialog), getApplicationContext());
         loginRequest.getResponse(data);
+        closeKeyBoard();
+    }
+
+    private void closeKeyBoard(){
+        InputMethodManager inputManager = (InputMethodManager)
+                getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     private boolean validateInput(String name, String email, String phone) {
