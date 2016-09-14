@@ -33,20 +33,15 @@ public class GetDetailsActivity extends AppCompatActivity {
     }
 
     public void getDetails(View view){
-        String name = userIdEditText.getText().toString();
+        String userId = userIdEditText.getText().toString();
         ProgressDialog dialog = new ProgressDialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setMessage("Getting data...");
         dialog.show();
         JSONObject data = new JSONObject();
-        try{
-            data.put("userId", name);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        PostRequest loginRequest = new PostRequest(Server.API_URL_SAVE_DETAILS, getResponseHandler(dialog), getApplicationContext());
-        loginRequest.getResponse(data);
+        GetRequest getDetailsRequest = new GetRequest(Server.API_URL_GET_DETAILS + "?userId=" + userId, getResponseHandler(dialog), getApplicationContext());
+        getDetailsRequest.getResponse(data);
     }
 
     private Request.ResponseHandler getResponseHandler(final ProgressDialog dialog){
@@ -88,7 +83,7 @@ public class GetDetailsActivity extends AppCompatActivity {
 
             showDialog(userId, name, phone, email, address);
         }catch (Exception e){
-
+            e.printStackTrace();
         }
     }
 
@@ -100,11 +95,11 @@ public class GetDetailsActivity extends AppCompatActivity {
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(dialog.getWindow().getAttributes());
 
-        TextView userIdTextView = (TextView) findViewById(R.id.userId);
-        TextView nameTextView = (TextView) findViewById(R.id.name);
-        TextView emailTextView = (TextView) findViewById(R.id.email);
-        TextView phoneTextView = (TextView) findViewById(R.id.phone);
-        TextView addressTextView = (TextView) findViewById(R.id.address);
+        TextView userIdTextView = (TextView) dialog.findViewById(R.id.userId);
+        TextView nameTextView = (TextView) dialog.findViewById(R.id.name);
+        TextView emailTextView = (TextView) dialog.findViewById(R.id.email);
+        TextView phoneTextView = (TextView) dialog.findViewById(R.id.phone);
+        TextView addressTextView = (TextView) dialog.findViewById(R.id.address);
 
         userIdTextView.setText(userIdTextView.getText() + userId);
         nameTextView.setText(nameTextView.getText() + name);
