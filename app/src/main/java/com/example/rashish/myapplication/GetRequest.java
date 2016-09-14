@@ -13,7 +13,7 @@ public class GetRequest{
         this.request = new Request(url,responseHandler,context);
     }
     public void getResponse(JSONObject params){
-        request.getResponse(com.android.volley.Request.Method.GET,params);
+        request.getResponse(com.android.volley.Request.Method.GET, params);
     }
     public void cancelRequest(){
         request.cancelRequest();
